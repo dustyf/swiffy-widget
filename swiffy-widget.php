@@ -59,9 +59,10 @@ class df_swiffy_widget extends WP_Widget {
 		}
 		$styles .= '"';
 		$fallback = get_field( 'swiffy_fallback_image', $p_id );
+		$anim_id = get_field( 'swiffy_animation_id', $p_id );
 
 		echo '<script src="' . $swiffyjs['url'] . '"></script>';
-		echo '<div id="' . get_field( 'swiffy_animation_id', $p_id ) . '"' . $styles . '></div>';
+		echo '<div id="' . $anim_id . '"' . $styles . '></div>';
 		echo '<script>
 			if (Modernizr.svg) {
 				var stage = new swiffy.Stage(document.getElementById("' . get_field( 'swiffy_animation_id', $p_id ) . '"), swiffyobject);';
@@ -70,7 +71,7 @@ class df_swiffy_widget extends WP_Widget {
 		}
 		echo 'stage.start();
 			} else {
-				document.write(\'<img src="' . $fallback['url'] . '" />\')
+				jQuery(\'#' . $anim_id . '\').html(\'<img src="' . $fallback['url'] . '" />\');
 			}
     		</script>';
 		echo $args['after_widget'];
